@@ -14,9 +14,8 @@ class Channel(ABC):
     """
 
 
-    @abstractmethod
     @staticmethod
-    @property
+    @abstractmethod
     def MAX_MTU() -> int:
         """
         Return the absolute maximum number of bytes that can be sent over this.
@@ -26,23 +25,8 @@ class Channel(ABC):
         """
         raise NotImplementedError
 
-    @property
-    def on_receive(self) -> Callable[[bytes], None]:
-        """
-        Callable which will be called when a packet has been received.
-        """
-        if '_on_recv' not in self.__dict__:
-            return None
-        else:
-            return self._on_recv
-
-    @on_receive.setter
-    def set_on_receive(self, new_value: Callable[[bytes], None]):
-        self._on_recv = new_value
-
-
     @abstractmethod
-    def send(self, data: bytes) -> None:
+    async def send(self, data: bytes) -> None:
         """
         Send an IP packet containing this data.
 
@@ -50,3 +34,9 @@ class Channel(ABC):
         """
         raise NotImplementedError
 
+    @abstractmethod
+    async def recv(self) -> bytes:
+        """
+        Receive a single IP packet from the pending queue.
+        """
+        raise NotImplementedError

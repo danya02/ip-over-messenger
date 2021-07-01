@@ -1,1 +1,4 @@
 python-pytun>=2.4.1
+base65536>=0.1.1
+discord.py>=1.7.3
+
